@@ -5,6 +5,7 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.provider.Settings;
 
 import com.crdroid.faceunlock.R;
 
@@ -26,10 +27,17 @@ public class CameraUtil {
     }
 
     public static int getFrontFacingCameraId(Context context) {
-        int overrideCamId = context.getResources().getInteger(R.integer.override_front_cam_id);
-        if (overrideCamId != -1){
-            return overrideCamId;
+        boolean ignore = false;
+        try {
+            ignore = Settings.Global.getInt(context.getContentResolver(), "baikalos_camera_ignore_ir") != 0;
+        } catch (Exception e) {
         }
+        if( !ignore ) {
+            int overrideCamId = context.getResources().getInteger(R.integer.override_front_cam_id);
+            if (overrideCamId != -1){
+                return overrideCamId;
+            }
+	    }
         try {
             CameraManager cameraManager = context.getSystemService(CameraManager.class);
             String cameraId;

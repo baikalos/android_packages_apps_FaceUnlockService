@@ -21,7 +21,7 @@ import android.os.SystemProperties;
 
 public class FaceUnlockUtils {
     public static boolean isFaceUnlockSupported() {
-        return SystemProperties.getBoolean("ro.face_unlock_service.enabled", false);
+        return SystemProperties.getBoolean("persist.face_unlock_service.enabled", false);
     }
 
     public static Intent getServiceIntent() {

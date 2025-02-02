@@ -47,7 +47,7 @@ public class CameraFaceAuthController {
             mHandler.sendEmptyMessage(CAM_MSG_ERROR);
         }
     };
-    private final int mCamID;
+    private int mCamID;
     protected ErrorCallbackListener mErrorCallbackListener = (i, unused) -> mHandler.sendEmptyMessage(CAM_MSG_ERROR);
     private ServiceCallback mCallback;
     @SuppressWarnings("deprecation")
@@ -90,6 +90,7 @@ public class CameraFaceAuthController {
 
     public void start() {
         Log.i(TAG, "start enter");
+        mCamID = CameraUtil.getFrontFacingCameraId(mContext);
         mHandler.sendEmptyMessageDelayed(CAM_MSG_OPEN, mCamOpenDelay);
     }
 

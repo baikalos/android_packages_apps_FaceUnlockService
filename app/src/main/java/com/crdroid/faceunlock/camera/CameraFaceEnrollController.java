@@ -49,7 +49,7 @@ public class CameraFaceEnrollController {
             mHandler.sendEmptyMessage(CAM_MSG_ERROR);
         }
     };
-    private final int mCamID;
+    private int mCamID;
     protected ErrorCallbackListener mErrorCallbackListener = (i, unused) -> mHandler.sendEmptyMessage(CAM_MSG_ERROR);
     @SuppressWarnings("deprecation")
     private Camera.Parameters mCameraParam;
@@ -134,6 +134,7 @@ public class CameraFaceEnrollController {
 
     public void start(final CameraCallback cameraCallback, int i) {
         Log.i(TAG, "new start : " + cameraCallback);
+        mCamID = CameraUtil.getFrontFacingCameraId(mContext);
         synchronized (mCameraCallbacks) {
             if (mCameraCallbacks.contains(cameraCallback)) {
                 return;
